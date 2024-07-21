@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --size-slider: 40px;
+}
+
+.container {
+    width: 630px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+#newImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    box-shadow: none;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50%;
+    z-index: 3;
+    width: calc(100% + var(--size-slider));
+    height: 100%;
+    appearance: none;
+    background-color: transparent;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--size-slider);
+    height: var(--size-slider);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background: url('./assets/img/OIP-removebg-preview-removebg-preview.png'), rgba(255, 255, 255, .3);
+    background-size: contain;
+    cursor: pointer;
+}
+
+/* responsive  */
+
+@media screen and (max-width: 700px) {
+    .container {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .container {
+        width: 380px;
+    }
+
+    :root {
+        --size-slider: 36px;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .container {
+        width: 280px;
+    }
+
+    :root {
+        --size-slider: 30px;
+    }
+}
