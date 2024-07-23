@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import url('./root.css');
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--smoke-color);
+}
+
+/* Header  */
+header {
+    background-color: var(--red-color);
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+.header__title {
+    height: 100%;
+    color: var(--white-color);
+    letter-spacing: 1.5px;
+}
+
+.header__title h2 {
+    text-align: center;
+    font-size: 38px;
+}
+
+/* .header__nav {
+
+} */
+
+.header__list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    list-style-type: none;
+    color: var(--white-color);
+    padding: 0;
+}
+
+.header__list-item {
+    padding: 10px;
+}
+
+.header__link {
+    display: block;
+    color: var(--white-color);
+    font-size: 20px;
+    text-decoration: none;
+    transition: .3s;
+    letter-spacing: 1px;
+}
+
+.current {
+    line-height: 20px;
+    border-bottom: 4px solid var(--white-color);
+}
+
+.header__link:hover {
+    text-decoration: none;
+    color: var(--blue-color);
+    border-color: var(--blue-color);
+}
+
+.header__link:active {
+    color: var(--blue-color);
+    border-color: var(--blue-color);
+    opacity: .7;
+}
+/* End Header  */
+
+/* Content  */
+.m--2 {
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+}
+
+.content {
+    background-color: var(--smoke-color);
+}
+
+.content__display {
+    height: calc(100% - 1rem);
+    border-radius: 8px;
+    background-color: var(--white-color);
+}
+
+.content__asking {
+    text-align: center;
+    font-size: 140px;
+    margin: 0;
+}
+
+.content__number {
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+#number1 {
+    color: var(--red-color);
+}
+
+#operator {
+    color: var(--blue-color);
+}
+
+#number2 {
+    color: var(--yellow-color);
+}
+
+#equal {
+    color: var(--orange-color);
+}
+
+#number3 {
+    color: var(--grey-color);
+}
+
+/* .content__answer-list {
+
+} */
+
+.content__answer-item {
+    border-radius: 8px;
+    color: var(--white-color);
+    font-size: 90px;
+    text-align: center;
+    background-color: red;
+    transition: 0.3s;
+    margin-bottom: 1rem;
+}
+
+#answer1 {
+    background-color: var(--red-color);
+}
+
+#answer2 {
+    background-color: var(--blue-color);
+}
+
+#answer3 {
+    background-color: var(--yellow-color);
+}
+
+#answer4 {
+    background-color: var(--orange-color);
+}
+
+.content__answer-item[id^="answer"]:hover {
+    cursor: pointer;
+    background-color: var(--white-color) !important;
+}
+
+.content__answer-item[id^="answer"]:active {
+    transition: unset;
+    background-color: #dddddd !important;
+}
+
+#answer1:hover {
+    color: var(--red-color);
+}
+
+#answer2:hover {
+    color: var(--blue-color);
+}
+
+#answer3:hover {
+    color: var(--yellow-color);
+}
+
+#answer4:hover {
+    color: var(--orange-color);
+}
+/* End Content  */
