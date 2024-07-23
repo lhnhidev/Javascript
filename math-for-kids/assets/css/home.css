@@ -57,3 +57,50 @@ body {
     color: var(--white-color);
     transition: unset;
 }
+
+@media screen and (max-width: 500.98px) {
+    .container h1 {
+        font-size: 52px;
+        margin-top: 25px;
+    }
+
+    .play-btn {
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 475.98px) {
+    .container h1 {
+        font-size: 46px;
+        margin-top: 25px;
+    }
+
+    .play-btn {
+        margin-top: 40px;
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 428.98px) {
+    .container h1 {
+        font-size: 38px;
+        margin-top: 30px;
+    }
+
+    .play-btn {
+        margin-top: 20px;
+        font-size: 22px;
+    }
+}
+
+@media screen and (max-width: 366.98px) {
+    .container h1 {
+        font-size: 30px;
+        margin-top: 30px;
+    }
+
+    .play-btn {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+}
