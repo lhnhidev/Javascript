@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form validation</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    
+    <div class="wrapper">
+        <form action="" method="POST" class="form" id="form-1">
+            <h2 class="form__heading">Thành viên đăng ký</h2>
+            <p class="form__desc">Cùng nhau học lập trình <3</p>
+
+            <div class="form-group">
+                <label for="fullName" class="form-label">Họ và tên</label>
+                <input type="text" name="fullName" class="form-control" id="fullName" placeholder="VD: Lê Hoàng Nhi">
+                <span class="form-span"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email" class="form-label">Nhập email</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="VD: lhnhi@gmail.com">
+                <span class="form-span"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Nhập mật khẩu</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Nhập mật khẩu">
+                <span class="form-span"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordRepeat" class="form-label">Nhập lại mật khẩu</label>
+                <input type="password" name="passwordRepeat" class="form-control" id="passwordRepeat" placeholder="Nhập lại mật khẩu">
+                <span class="form-span"></span>
+            </div>
+
+            <input type="text" value="Đăng ký" class="btn-submit" id="submit">
+        </form>
+    </div>
+
+    <script src="./script/index.js"></script>
+
+    <script>
+        Validator({
+            form: '#form-1',
+            errorSpan: '.form-span',
+            classInvalid: 'invalid',
+            rules: [
+                Validator.isRequired(['#fullName', '#password', '#passwordRepeat']),
+                Validator.isEmail(['#email']),
+                Validator.isPassword(['#password']),
+                Validator.isPasswordRepeat(['#passwordRepeat'], '#form-1', '#password')
+            ]
+        });
+    </script>
+</body>
+</html>
