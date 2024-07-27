@@ -32,9 +32,23 @@
             </div>
 
             <div class="form-group">
-                <label for="passwordRepeat" class="form-label">Nhập lại mật khẩu</label>
-                <input type="password" name="passwordRepeat" class="form-control" id="passwordConfirm" placeholder="Nhập lại mật khẩu">
+                <label for="passwordConfirm" class="form-label">Nhập lại mật khẩu</label>
+                <input type="password" name="passwordConfirm" class="form-control" id="passwordConfirm" placeholder="Nhập lại mật khẩu">
                 <span class="form-span"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="form-label">Giới tính</label>
+                <div class="form-check">
+                    <input type="radio" name="sex" value="male" class="form-check-input" id="male">
+                    <label for="male">Nam</label>
+                </div>
+                
+                <div class="form-check">
+                    <input type="radio" name="sex" value="female" class="form-check-input" id="female">
+                    <label for="female">Nữ</label>
+                </div>
+                
             </div>
 
             <input type="submit" value="Đăng ký" class="btn-submit" id="submit">
@@ -45,10 +59,11 @@
 
     <script>
         
-        Validator({
+        Validator ({
             form: '#form-1',
-            spanForm: '.form-span',
-            classEditError: 'invalid',
+            formGroup: '.form-group',
+            errorMessage: '.form-span',
+            editError: 'invalid',
             rules: [
                 Validator.isRequired('#fullName'),
                 Validator.isRequired('#email'),
@@ -58,11 +73,9 @@
                 Validator.isRequired('#passwordConfirm'),
                 Validator.isPasswordConfirm('#passwordConfirm', function () {
                     return document.querySelector('#form-1 #password');
-                }, 'Mật khẩu không khớp.')
+                })
             ],
-            onSubmit: function (data) {
-                return data;
-            }
+            onSubmit: {}
         });
 
     </script>

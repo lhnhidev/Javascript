@@ -1,101 +1,106 @@
-function Validator(options) {
+function Validator (options) {
     var formElement = document.querySelector(options.form);
-    var selectorRules = {};
-    options.rules.forEach(rule => {
-        if (Array.isArray(selectorRules[rule.selector])) {
-            selectorRules[rule.selector].push(rule.test);
+    var selectorValue = {};
+
+    function getParent (element, parent) {
+        while (element.parentElement) {
+            if (element.parentElement.matches(parent)) {
+                return element.parentElement;
+            }
+            else {
+                element = element.parentElement;
+            }
         }
-        else {
-            selectorRules[rule.selector] = [rule.test];
-        }
-    });
+    }
+
+    function addWarning (messageError, inputElement) {
+        var spanElement = getParent(inputElement, options.formGroup).querySelector(options.errorMessage);
+        spanElement.innerText = messageError;
+        getParent(inputElement, options.formGroup).classList.add(options.editError);
+    }
+
+    function removeWarning (inputElement) {
+        var spanElement = getParent(inputElement, options.formGroup).querySelector(options.errorMessage);
+        spanElement.innerText = '';
+        getParent(inputElement, options.formGroup).classList.remove(options.editError);
+    }
+
     if (formElement) {
-        formElement.onsubmit = function (e) {
-            e.preventDefault();
+        options.rules.forEach (function (rule) {
+            if (Array.isArray(selectorValue[rule.selector])) {
+                selectorValue[rule.selector].push(rule.test);
+            }
+            else {
+                selectorValue[rule.selector] = [rule.test];
+            }
+        });
+
+        options.rules.forEach (function (rule) {
+            var inputElement = formElement.querySelector(rule.selector);
+
             
-            var isValid = true;
-            for (var item in selectorRules) {
-                var inputElement = formElement.querySelector(item);
-                for (var test of selectorRules[item]) {
+            inputElement.onblur = function () {
+                selectorValue[rule.selector].forEach (function (test) {
+                    if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
+                        var messageError = test(inputElement.value);
+                        if (messageError) {
+                            addWarning(messageError, inputElement);
+                        }
+                    }
+                });
+            }
+
+            inputElement.oninput = function () {
+                if (getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
+                    removeWarning(inputElement);
+                }
+            }
+        });
+    }
+
+    formElement.onsubmit = function (e) {
+        e.preventDefault();
+
+        var isValid = true;
+        options.rules.forEach (function (rule) {
+            var inputElement = formElement.querySelector(rule.selector);
+            selectorValue[rule.selector].forEach (function (test) {
+                if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
                     var messageError = test(inputElement.value);
                     if (messageError) {
-                        var spanElement = inputElement.parentElement.querySelector(options.spanForm);
-                        var groupElement = inputElement.parentElement;
-                        addClassEditError(spanElement, groupElement, messageError);
+                        addWarning(messageError, inputElement);
                         isValid = false;
                     }
-                    if (!isValid) break;
                 }
-            }
-    
-            var enableInputs = formElement.querySelectorAll('[name]:not([disabled])');
-            if (isValid == true) {
-                options.onSubmit = [...enableInputs].reduce(function (value, input) {
-                    value[input.name] = input.value;
-                    return value;
-                }, {}); 
-                console.log(options.onSubmit);
-            }
-            else {
-                // console.log('Dữ liệu nhập sai');
-            }
-        }
-
-        function addClassEditError (spanElement, groupElement, messageError) {
-            spanElement.innerHTML = messageError;
-            groupElement.classList.add(options.classEditError);
-        }
-
-        function removeClassEditError (spanElement, groupElement, messageError) {
-            spanElement.innerHTML = '';
-            groupElement.classList.remove(options.classEditError);
-        }
-
-        options.rules.forEach(rule => {
-            if (Array.isArray(selectorRules[rule.selector])) {
-                selectorRules[rule.selector].push(rule.test);
-            }
-            else {
-                selectorRules[rule.selector] = [rule.test];
-            }
-
-            var inputElement = document.querySelector(rule.selector);
-            if (inputElement) {
-                inputElement.onblur = function () {
-                    var messageError;
-                    for (var item of selectorRules[rule.selector]) {
-                        messageError = item(inputElement.value);
-                        if (messageError) {
-                            break;
-                        }
-                    }
-
-                    var spanElement = inputElement.parentElement.querySelector(options.spanForm);
-                    var groupElement = inputElement.parentElement;
-
-                    if (messageError) {
-                        addClassEditError(spanElement, groupElement, messageError);
-                        inputElement.oninput = function () {
-                            removeClassEditError(spanElement, groupElement, messageError);
-                        }
-                    }
-                    else {
-                        removeClassEditError(spanElement, groupElement, messageError);
-                    }
-                    
+                else {
+                    isValid = false;
                 }
-            }
-
+            });
         });
+
+        var informationUser = {};
+        if (isValid) {
+            console.log('Lấy dữ liệu thành công');
+            var enableInputs = formElement.querySelectorAll('[name]:not([disabled])');
+            options.onSubmit = [...enableInputs].reduce (function (value, input) {
+                value[input.name] = input.value;
+                return value;
+            }, {});
+
+            console.log(options.onSubmit);
+        }
+        else {
+            console.log('Lấy dữ liệu thất bại');
+            isValid = true;
+        }
     }
 }
 
-//Define method Validator
 Validator.isRequired = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
-            return value.trim() ? undefined : (message || 'Phải nhập trường này.');
+            return value.trim() ? undefined : message || 'Trường này là bắt buộc.';
         }
     }
 }
@@ -105,7 +110,7 @@ Validator.isEmail = function (selector, message) {
         selector: selector,
         test: function (value) {
             var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            return regex.test(value) ? undefined : (message || 'Trường này phải là email.');
+            return regex.test(value) ? undefined : message || 'Trường này phải là email.';
         }
     }
 }
@@ -115,17 +120,17 @@ Validator.isPassword = function (selector, message) {
         selector: selector,
         test: function (value) {
             var regex = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
-            return regex.test(value) ? undefined : (message || 'Password ít nhất 8 ký tự, phải có chữ in thường, in hoa, số và ký tự đặc biệt.');
+            return regex.test(value) ? undefined : message || 'Mật khẩu tối thiểu 8 ký tự, phải có ít nhất một chữ in hoa, in thường, chữ số và ký tự đặc biệt.';
         }
     }
 }
 
-Validator.isPasswordConfirm = function (passwrodConfirm, getPassword, message) {
+Validator.isPasswordConfirm = function (passwordConfirm, getPassword, message) {
     return {
-        selector: passwrodConfirm,
+        selector: passwordConfirm,
         test: function (value) {
             var currentPassword = getPassword();
-            return value == currentPassword.value ? undefined : (message || 'Mật khẩu không khớp.');
+            return value == currentPassword.value ? undefined : message || 'Xác thực mật khẩu không chính xác.'
         }
     }
 }

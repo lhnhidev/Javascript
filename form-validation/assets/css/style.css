@@ -73,6 +73,20 @@ html {
     border-color:rgb(145, 225, 241);
 }
 
+.form-check {
+    margin-top: 8px;
+}
+
+.form-check label {
+    font-size: 1.4rem;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.form-check-input {
+    vertical-align: middle;
+}
+
 .form-span {
     display: block;
     color: #616161;
