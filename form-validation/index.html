@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="passwordRepeat" class="form-label">Nhập lại mật khẩu</label>
-                <input type="password" name="passwordRepeat" class="form-control" id="passwordRepeat" placeholder="Nhập lại mật khẩu">
+                <input type="password" name="passwordRepeat" class="form-control" id="passwordConfirm" placeholder="Nhập lại mật khẩu">
                 <span class="form-span"></span>
             </div>
 
@@ -44,17 +44,27 @@
     <script src="./script/index.js"></script>
 
     <script>
+        
         Validator({
             form: '#form-1',
-            errorSpan: '.form-span',
-            classInvalid: 'invalid',
+            spanForm: '.form-span',
+            classEditError: 'invalid',
             rules: [
-                Validator.isRequired(['#fullName', '#password', '#passwordRepeat']),
-                Validator.isEmail(['#email']),
-                Validator.isPassword(['#password']),
-                Validator.isPasswordRepeat(['#passwordRepeat'], '#form-1', '#password')
-            ]
+                Validator.isRequired('#fullName'),
+                Validator.isRequired('#email'),
+                Validator.isEmail('#email'),
+                Validator.isRequired('#password'),
+                Validator.isPassword('#password'),
+                Validator.isRequired('#passwordConfirm'),
+                Validator.isPasswordConfirm('#passwordConfirm', function () {
+                    return document.querySelector('#form-1 #password');
+                }, 'Mật khẩu không khớp.')
+            ],
+            onSubmit: function (data) {
+                return data;
+            }
         });
+
     </script>
 </body>
 </html>
