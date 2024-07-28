@@ -2,6 +2,7 @@ function Validator (options) {
     var formElement = document.querySelector(options.form);
     var selectorValue = {};
 
+    //Lấy parent gần nhất của element
     function getParent (element, parent) {
         while (element.parentElement) {
             if (element.parentElement.matches(parent)) {
@@ -12,20 +13,26 @@ function Validator (options) {
             }
         }
     }
+     /** */
 
+    //Hàm thêm class invalid
     function addWarning (messageError, inputElement) {
         var spanElement = getParent(inputElement, options.formGroup).querySelector(options.errorMessage);
         spanElement.innerText = messageError;
         getParent(inputElement, options.formGroup).classList.add(options.editError);
     }
+    /** */
 
+    //Hàm xóa class invalid
     function removeWarning (inputElement) {
         var spanElement = getParent(inputElement, options.formGroup).querySelector(options.errorMessage);
         spanElement.innerText = '';
         getParent(inputElement, options.formGroup).classList.remove(options.editError);
     }
+    /** */
 
     if (formElement) {
+        //Đẩy các rule (method) cần test của các element vào một object
         options.rules.forEach (function (rule) {
             if (Array.isArray(selectorValue[rule.selector])) {
                 selectorValue[rule.selector].push(rule.test);
@@ -34,65 +41,137 @@ function Validator (options) {
                 selectorValue[rule.selector] = [rule.test];
             }
         });
+        /** */
 
         options.rules.forEach (function (rule) {
-            var inputElement = formElement.querySelector(rule.selector);
+            var inputElements = formElement.querySelectorAll(rule.selector);
 
-            
-            inputElement.onblur = function () {
-                selectorValue[rule.selector].forEach (function (test) {
-                    if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
-                        var messageError = test(inputElement.value);
-                        if (messageError) {
-                            addWarning(messageError, inputElement);
+            //Onblur ra ngoài bắt đầu cho chạy các method để kiểm tra
+            inputElements.forEach (function (inputElement) {
+                inputElement.onblur = function () {
+                    selectorValue[rule.selector].forEach (function (test) {
+                        if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
+                            var messageError = test(inputElement.value);
+                            if (messageError) {
+                                addWarning(messageError, inputElement);
+                            }
                         }
-                    }
-                });
-            }
-
-            inputElement.oninput = function () {
-                if (getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
-                    removeWarning(inputElement);
+                    });
                 }
-            }
+
+                //Khi thực hiện điền lại thì auto xóa class invalid đi
+                inputElement.oninput = function () {
+                    if (getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
+                        removeWarning(inputElement);
+                    }
+                }
+                /** */
+
+            });
+            /** */
         });
     }
 
     formElement.onsubmit = function (e) {
-        e.preventDefault();
+        e.preventDefault(); //Bỏ sự kiện submit mặc định của form
 
-        var isValid = true;
+        var isValid = true; //Mặc định thông tin lấy được là hợp lệ
         options.rules.forEach (function (rule) {
-            var inputElement = formElement.querySelector(rule.selector);
-            selectorValue[rule.selector].forEach (function (test) {
-                if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
-                    var messageError = test(inputElement.value);
-                    if (messageError) {
-                        addWarning(messageError, inputElement);
+            var inputElements = formElement.querySelectorAll(rule.selector);
+            inputElements.forEach (function (inputElement) {
+                selectorValue[rule.selector].forEach (function (test) {
+                    if (!getParent(inputElement, options.formGroup).classList.contains(options.editError)) {
+                        var checkRadio = false;
+                        var messageError;
+                        switch (inputElement.type) {
+                            case 'checkbox':
+                            case 'radio':
+                                if (checkRadio == false) {
+                                    var checked = false;
+                                    inputElements.forEach(function (item) {
+                                        if (item.checked) checked = true;
+                                    });
+                                    if (!checked) {
+                                        messageError = test('');
+                                    }
+                                    checkRadio = true;
+                                }
+                                break;
+                            default: 
+                                messageError = test(inputElement.value);
+                        }
+                        if (messageError) { //Có lỗi ~ không hợp lệ => thêm invalid và gán isValid lại bằng false
+                            addWarning(messageError, inputElement);
+                            isValid = false;
+                        }
+                    }
+                    else {
                         isValid = false;
                     }
-                }
-                else {
-                    isValid = false;
-                }
+                });
+
             });
         });
 
-        var informationUser = {};
+        //Tạo object lưu thông tin lấy được
         if (isValid) {
-            console.log('Lấy dữ liệu thành công');
+            // console.log('Lấy dữ liệu thành công');
             var enableInputs = formElement.querySelectorAll('[name]:not([disabled])');
             options.onSubmit = [...enableInputs].reduce (function (value, input) {
-                value[input.name] = input.value;
+                switch (input.type) {
+                    case 'checkbox':
+                        if (input.checked) {
+                            if (!Array.isArray(value[input.name])) {
+                                value[input.name] = [input.id];
+                            }
+                            else {
+                                value[input.name].push(input.id);
+                            }
+                        }
+                        break;
+                    case 'radio':
+                        if (input.checked) {
+                            value[input.name] = input.id;
+                        }
+                        break;
+                    default:
+                        value[input.name] = input.value;
+                }
                 return value;
             }, {});
 
-            console.log(options.onSubmit);
+            var informationUser = '';
+            for (var item in options.onSubmit) {
+                informationUser += `${item}: ${options.onSubmit[item]}<br/>`;
+            }
+
+            // console.log(informationUser);
+
+            Email.send({
+                Host : "smtp.elasticemail.com",
+                Username : "lhnhi420@gmail.com",
+                Password : "5E20BD1C19936442B3D956B543BEB31AFC64",
+                To : 'lhnhi420@gmail.com',
+                From : "lhnhi420@gmail.com",
+                Subject : "This is the subject",
+                Body : informationUser
+            }).then(
+                message => {
+                    if (message == 'OK') {
+                        swal("Good job!", "Thanks for signing up", "success");
+                    }
+                    else {
+                        swal("Oops!", "Please try again", "error");
+                    }
+                }
+            );
+            // console.log(options.onSubmit); //In object vừa nhập được
         }
         else {
-            console.log('Lấy dữ liệu thất bại');
+            // console.log('Lấy dữ liệu thất bại');
             isValid = true;
         }
+        /** */
     }
 }
 
