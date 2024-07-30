@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List v1</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="container">
+            <div class="todo">
+                <h1 class="todo__title">
+                    <span class="todo__day" id="day"></span>
+                    <span class="todo__date" id="date"></span>
+                    <span class="todo__month" id="month"></span>
+                </h1>
+
+                <p class="todo__time" id="time">
+
+                </p>
+
+                <div class="todo__condition">
+                    <div class="todo__created">
+                        <p class="todo__created-number" id="createdNumber">00</p>
+                        <p class="todo__created-desc">Created Tasks</p>
+                    </div>
+
+                    <div class="todo__completed">
+                        <p class="todo__completed-number" id="completedNumber">00</p>
+                        <p class="todo__completed-desc">Completed Tasks</p>
+                    </div>
+                </div>
+
+                <div class="todo__list" id="list"></div>
+                
+                <button class="todo__add-btn" id="addButton">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+
+            <div class="task" id="task">
+                <form action="" class="task__form" id="taskFrom">
+                    <textarea name="task" id="taskContent" class="task__content" placeholder="Fill your taks here"></textarea>
+                    <input type="submit" value="Add" class="task__btn" id="taskButton">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+</html>
