@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kéo búa bao</title>
+
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="header__title">Kéo búa bao</h1>
+        </header>
+
+        <div class="content">
+            <div class="content__user">
+                <img src="./assets/img/bantaytrai.gif" alt="" class="content__img-user" id="userImage">
+            </div>
+
+            <div class="content__bot">
+                <img src="./assets/img/bantayphai.gif" alt="" class="content__img-bot" id="botImage">
+            </div>
+        </div>
+
+        <div class="selection">
+            <div class="selection__user">
+                <span class="selection__title">Your choice: </span>
+                <div class="selection__options inline" id="user">
+                    <button class="btn" id="keoUser">Kéo</button>
+                    <button class="btn" id="buaUser">Búa</button>
+                    <button class="btn" id="baoUser">Bao</button>
+                </div>
+            </div>
+
+            <div class="selection__bot">
+                <span class="selection__title">Bot choice: </span>
+                <div class="selection__options inline">
+                    <button class="btn" id="keoBot" disabled>Kéo</button>
+                    <button class="btn" id="buaBot" disabled>Búa</button>
+                    <button class="btn" id="baoBot" disabled>Bao</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="result">
+            <h2 class="result__title" id="result"></h2>
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+</html>

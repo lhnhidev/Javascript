@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Luckiest Guy", cursive;
+    font-size: 62.5%;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+}
+
+.header {
+    margin-bottom: 50px;
+}
+
+.result__title,
+.header__title {
+    text-align: center;
+    font-size: 5rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    word-spacing: 4px;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.selection {
+    margin-top: 50px;
+}
+
+.selection__user,
+.selection__bot {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    margin-bottom: 24px;
+}
+
+.selection__title {
+    font-size: 2.6rem;
+    font-weight: 400;
+}
+
+.selection__options {
+    margin-left: 28px;
+}
+
+.btn {
+    padding: 6px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.8rem;
+    background-color: #3c81db;
+    transition: .4s;
+}
+
+.selection .selection__user .btn:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+.selection .selection__user .btn:focus {
+    background-color: rgb(225, 225, 75);
+}
+
+.selection__options .btn {
+    margin-left: 20px;
+}
+
+.result__title {
+    margin-top: 50px;
+    font-size: 4rem;
+}
+
+.choice {
+    background-color: rgb(211, 52, 52);
+}
