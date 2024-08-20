@@ -1,0 +1,135 @@
+.header {
+    padding-top: 40px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.header__title {
+    text-align: center;
+    font-size: 3.6rem;
+}
+
+.header__nav {
+    margin-top: 30px;
+}
+
+.header__option {
+    font-size: 1.8rem;
+    text-align: center;
+    background-color: var(--primary-color);
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    transition: .3s;
+}
+
+.header__option:hover {
+    background-color: var(--hover-color);
+    opacity: .8;
+    color: #fff;
+    border-color: #fff;
+    cursor: pointer;
+}
+
+/* main  */
+.main {
+    padding: 20px 10px;
+}
+
+.main__search {
+    margin-bottom: 5px;
+}
+
+.main__search input {
+    padding: 10px 7px;
+    width: 300px;
+}
+
+.main__sort {
+    margin-bottom: 30px;
+}
+
+.main__search,
+.main__sort {
+    font-size: 1.6rem;
+}
+
+.main__sort label {
+    margin-left: 4px
+}
+
+.main__product {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow: hidden;
+    height: 330px;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.main__product:hover {
+    cursor: pointer;
+    top: -10px;
+}
+
+.main__img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center center;
+    transition: .3s;
+}
+
+.main__name {
+    font-size: 2.2rem;
+    margin: 10px;
+}
+
+.main__desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 1.8rem;
+    margin: 10px;
+}
+
+.main__price {
+    color: var(--price-color);
+    font-weight: 600;
+}
+
+.main__amount {
+    font-size: 1.4rem;
+}
+
+/* footer  */
+
+.footer {
+    display: flex;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+.footer__option {
+    margin-left: 4px;
+    margin-right: 4px;
+    border: 1px solid #333;
+    color: #333;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    padding: 8px 15px;
+    transition: .3s;
+}
+
+.footer__option:hover {
+    background-color: var(--hover-color);
+    color: #ddd;
+    cursor: pointer;
+}
+
+/* end footer  */

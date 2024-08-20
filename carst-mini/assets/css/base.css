@@ -1,0 +1,78 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+:root {
+    --primary-color: #FFC356;
+    --price-color: #FF5C59;
+    --hover-color: #a6d81c;
+    --text-color: #333;
+}
+
+/* align element  */
+.margin-right-10px {
+    margin-right: 10px;
+}
+/* end align element  */
+
+/* css btn  */
+
+[class*="btn"] {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    border-radius: 10px;
+    transition: .3s;
+}
+
+[class*="btn"]:hover {
+    cursor: pointer;
+    color: #fff;
+    border-color: #fff;
+    background-color: var(--hover-color);
+}
+
+/* end css btn  */
+
+/* animation  */
+
+@keyframes moveTop {
+    form {
+        top: 0px;
+    }
+    to {
+        top: -5px;
+    }
+    to {
+        top: -10px;
+    }
+}
+
+/* end animation  */
+
+/* Clone Bootstrap  */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+[class*="col"] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.col-100div8 {
+    width: calc(100% / 8);
+}
+
+.col-100div6 {
+    width: calc(100% / 6);
+}
